@@ -53,3 +53,37 @@ export const updateTodo = async (todoId: number, newContent: string) => {
 
   revalidatePath("/todos");
 };
+
+// export const searchTodo = async (formData: FormData) => {
+//   const content = formData.get("content");
+//   try {
+//     const result = await prisma.todo.findMany({
+//       where: {
+//         content: {
+//           contains: content as string,
+//         },
+//       },
+//     });
+//     return result;
+//   } catch (e) {
+//     //     return { error: e };
+//   }
+
+//   revalidatePath("/todos");
+// };
+export const searchTodo = async (content: string) => {
+  try {
+    const result = await prisma.todo.findMany({
+      where: {
+        content: {
+          contains: content as string,
+        },
+      },
+    });
+    return result;
+  } catch (e) {
+    //     return { error: e };
+  }
+
+  revalidatePath("/todos");
+};
