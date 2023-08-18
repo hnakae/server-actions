@@ -1,6 +1,6 @@
 import { prisma } from "@/db/db";
 import TodosComponent from "@/components/todos-component";
-import Table from "@/components/Table";
+import Table2 from "@/components/Table2";
 import Search from "@/components/Search";
 
 export default async function TodosPage() {
@@ -20,9 +20,9 @@ export default async function TodosPage() {
 
         <TodosComponent todos={todos} />
 
-        <Search />
+        {/* <Search /> */}
 
-        <Table />
+        <Table2 />
       </main>
     </>
   );
