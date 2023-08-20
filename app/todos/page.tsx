@@ -1,6 +1,6 @@
 import { prisma } from "@/db/db";
 import TodosComponent from "@/components/todos-component";
-import Table2, { Table } from "@/components/Table2";
+import { Table } from "@/components/Table";
 import Search from "@/components/Search";
 
 export default async function TodosPage() {
