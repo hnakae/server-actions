@@ -8,56 +8,7 @@ datasource db {
 }
 
 model Todo {
-  id      Int    @id @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   content String
-}
-
-model GameAnalysis {
-  id           Int           @id @default(autoincrement())
-  game_info_id Int
-  GameInfo     GameInfo      @relation(fields: [game_info_id], references: [id])
-  StoneAction  StoneAction[]
-}
-
-model GameInfo {
-  id           Int            @id @default(autoincrement())
-  game_type    Int
-  file_format  Int
-  board_size   Int
-  black_player String
-  black_rank   String
-  white_player String
-  white_rank   String
-  komi         Int
-  game_result  String
-  game_date    String
-  game_name    String
-  GameAnalysis GameAnalysis[]
-}
-
-model PlayerState {
-  id            Int           @id @default(autoincrement())
-  capture_count Int
-  stone_count   Int
-  group_count   Int
-  liberty_count Int
-  cluster_count Int
-  StoneAction   StoneAction[]
-}
-
-model StoneAction {
-  id               Int          @id @default(autoincrement())
-  step             Int
-  color            Color
-  coordinate       Int
-  captured_stones  Int[]
-  game_analysis_id Int
-  player_state_id  Int
-  GameAnalysis     GameAnalysis @relation(fields: [game_analysis_id], references: [id])
-  PlayerState      PlayerState  @relation(fields: [player_state_id], references: [id])
-}
-
-enum Color {
-  black
-  white
+  toggled Boolean
 }

@@ -3,11 +3,8 @@ import { experimental_useOptimistic as useOptimistic, useRef } from "react";
 import { addTodo, deleteTodo, updateTodo } from "@/actions/actions";
 import Button from "./Button";
 import Link from "next/link";
-
-type Todo = {
-  id: number;
-  content: string;
-};
+import { Todo } from "@prisma/client";
+import TodoItem from "./TodoItem";
 
 type TodosComponentProps = {
   todos: Todo[];
@@ -23,10 +20,6 @@ const TodosComponent = ({ todos }: TodosComponentProps) => {
     }
   );
 
-  const deleteTodoHandler = (todoId: number) => {
-    deleteTodo(todoId);
-  };
-
   return (
     <>
       <form
@@ -37,6 +30,7 @@ const TodosComponent = ({ todos }: TodosComponentProps) => {
           addOptimisticTodo({
             id: Math.random(),
             content: formData.get("content") as string,
+            toggled: false,
           });
           await addTodo(formData);
           // const { error } = await addTodo(formData);
@@ -59,29 +53,9 @@ const TodosComponent = ({ todos }: TodosComponentProps) => {
 
       <ul>
         {optimisticTodos.map((todo) => (
-          <li className="cursor-pointer" key={todo.id}>
-            <span
-              className="cursor-pointer hover:font-bold p-4"
-              onClick={() => deleteTodoHandler(todo.id)}
-            >
-              X{" "}
-            </span>
-            <span
-              className="cursor-pointer hover:font-bold p-4"
-              onClick={() => {
-                const newContent = window.prompt(
-                  "enter new content",
-                  todo.content
-                );
-                if (newContent !== null) {
-                  updateTodo(todo.id, newContent);
-                }
-              }}
-            >
-              edit{" "}
-            </span>
-            <Link href={`/todos/${todo.content}`}>{todo.content}</Link>
-          </li>
+          <div key={todo.id}>
+            <TodoItem todo={todo} />
+          </div>
         ))}
       </ul>
     </>

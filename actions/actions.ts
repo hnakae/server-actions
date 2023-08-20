@@ -10,6 +10,7 @@ export const addTodo = async (formData: FormData) => {
     await prisma.todo.create({
       data: {
         content: content as string,
+        toggled: false,
       },
     });
   } catch (e) {
@@ -35,7 +36,11 @@ export const deleteTodo = async (todoId: number) => {
   revalidatePath("/todos");
 };
 
-export const updateTodo = async (todoId: number, newContent: string) => {
+export const updateTodo = async (
+  todoId: number,
+  newContent: string,
+  toggled: boolean
+) => {
   // const content = formData.get("content");
 
   try {
@@ -45,6 +50,7 @@ export const updateTodo = async (todoId: number, newContent: string) => {
       },
       data: {
         content: newContent,
+        toggled: toggled,
       },
     });
   } catch (e) {
